@@ -84,6 +84,7 @@ metadata {
                 "speed_mph":"Miles per Hour",
                 "speed_kph":"Kilometers per Hour"
                 ])
+        input "weather", "device.smartweatherStationTile", title: "Weather...", multiple: true, required: false
 	}
 
     
@@ -207,7 +208,7 @@ metadata {
             state "solarradiation", label: 'Solar Radiation\n${currentValue} W/m²'
         }
         valueTile("windinfo", "device.windinfo", inactiveLabel: false, width: 3, height: 1, decoration: "flat", wordWrap: true) {
-            state "windinfo", label: 'Wind Condition\n${currentValue}'
+            state "windinfo", label: '${currentValue}'
         }
         valueTile("temperature2", "device.temperature", width: 1, height: 1, canChangeIcon: true) {
             state "temperature", label: '${currentValue}°'
@@ -236,7 +237,7 @@ def poll() {
 	// Current conditions
 	def obs = get("conditions")?.current_observation
 	if (obs) {
-        //log.debug "obs --> ${obs}"
+        log.debug "obs --> ${obs}"
         def now = new Date().format('hh:mm:ss M.d.yyyy',location.timeZone)
         sendEvent(name:"lastSTupdate", value: now)
         
