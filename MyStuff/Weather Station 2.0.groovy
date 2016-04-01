@@ -339,7 +339,7 @@ def poll() {
                     break;
 
                     case "speed_kph":
-                        send(name: "windinfo", value: "${obs.wind_dir} (${obs.wind_degrees}°) at ${obs.wind_kph} kph\n(Gust: ${obs.wind_gust_mph} mph)")
+                        send(name: "windinfo", value: "${obs.wind_dir} (${obs.wind_degrees}°) at ${obs.wind_kph} kph\n(Gust: ${obs.wind_gust_kph} kph)")
                     break;
                     default:
                         send(name: "wind_gust_mph", value: "${obs.wind_gust_mph} mph")
