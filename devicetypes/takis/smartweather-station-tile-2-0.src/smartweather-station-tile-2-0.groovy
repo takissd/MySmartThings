@@ -17,7 +17,7 @@
  *  Date: 2013-04-30
  */
 metadata {
-	definition (name: "SmartWeather Station Tile 2.0", namespace: "smartthings/miro", author: "Takis") {
+	definition (name: "SmartWeather Station Tile 2.0", namespace: "takis", author: "Takis") {
 		capability "Illuminance Measurement"
 		capability "Temperature Measurement"
 		capability "Relative Humidity Measurement"
