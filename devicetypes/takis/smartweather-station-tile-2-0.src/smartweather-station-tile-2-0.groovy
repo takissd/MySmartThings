@@ -91,7 +91,7 @@ metadata {
 	tiles(scale: 2) {
 		multiAttributeTile(name:"temperature", type:"generic", width:6, height:4, canChangeIcon: false) {
   			tileAttribute("device.temperature", key: "PRIMARY_CONTROL") {
-    			attributeState("default", label:'${currentValue}°',
+    			attributeState("default", label:'${currentValue}Â°',
                                backgroundColors:[
                                    [value: 31, color: "#153591"],
                                    [value: 44, color: "#1e9cbb"],
@@ -155,7 +155,7 @@ metadata {
 			state("default", label: 'Updated\n${currentValue}')
 	    }
 		valueTile("feelsLike", "device.feelsLike", inactiveLabel: false, width: 2, height: 1, decoration: "flat", wordWrap: true) {
-			state "default", label:'Feels Like\n${currentValue}°'
+			state "default", label:'Feels Like\n${currentValue}Â°'
 		}
 		valueTile("weather", "device.weather", inactiveLabel: false, width: 1, height: 1, decoration: "flat", wordWrap: true) {
 			state "default", label:'${currentValue}'
@@ -199,19 +199,19 @@ metadata {
             state "false",       icon: "st.alarm.water.dry",        backgroundColor:"#99ff99"
         }
         valueTile("dewpoint", "device.dewpoint", inactiveLabel: false, width: 2, height: 1, decoration: "flat", wordWrap: true) {
-			state "default", label:'Dewpoint\n${currentValue}°'
+			state "default", label:'Dewpoint\n${currentValue}Â°'
         }
         valueTile("pressure", "device.pressure", inactiveLabel: false, width: 3, height: 1, decoration: "flat", wordWrap: true) {
             state "pressure", label: 'Barometric Pressure\n${currentValue}'
         }
         valueTile("solarradiation", "device.solarradiation", inactiveLabel: false, width: 2, height: 1, decoration: "flat", wordWrap: true) {
-            state "solarradiation", label: 'Solar Radiation\n${currentValue} W/m²'
+            state "solarradiation", label: 'Solar Radiation\n${currentValue} W/mÂ²'
         }
         valueTile("windinfo", "device.windinfo", inactiveLabel: false, width: 3, height: 1, decoration: "flat", wordWrap: true) {
             state "windinfo", label: '${currentValue}'
         }
         valueTile("temperature2", "device.temperature", width: 1, height: 1, canChangeIcon: true) {
-            state "temperature", label: '${currentValue}°'
+            state "temperature", label: '${currentValue}Â°'
         }
 		main(["temperature2"])
 		details(["temperature", "humidity", "weatherIcon", "weather", "feelsLike" , "dewpoint", "windinfo", "pressure", "solarradiation", "uv_index", "light", "visibility", "city", "rise", "set", "lastSTupdate", "percentPrecip", "percentPrecipToday", "percentPrecipLastHour", "water", "alert", "refresh"])}
@@ -335,18 +335,18 @@ def poll() {
         if (speed_units) {
                 switch (speed_units) {
                     case "speed_mph" :
-                        send(name: "windinfo", value: "${obs.wind_dir} (${obs.wind_degrees}°) at ${obs.wind_mph} mph\n(Gust: ${obs.wind_gust_mph} mph)")
+                        send(name: "windinfo", value: "${obs.wind_dir} (${obs.wind_degrees}Â°) at ${obs.wind_mph} mph\n(Gust: ${obs.wind_gust_mph} mph)")
                     break;
 
                     case "speed_kph":
-                        send(name: "windinfo", value: "${obs.wind_dir} (${obs.wind_degrees}°) at ${obs.wind_kph} kph\n(Gust: ${obs.wind_gust_kph} kph)")
+                        send(name: "windinfo", value: "${obs.wind_dir} (${obs.wind_degrees}Â°) at ${obs.wind_kph} kph\n(Gust: ${obs.wind_gust_kph} kph)")
                     break;
                     default:
                         send(name: "wind_gust_mph", value: "${obs.wind_gust_mph} mph")
-                        send(name: "windinfo", value: "${obs.wind_dir} (${obs.wind_degrees}°) at ${obs.wind_mph} mph\n(Gust: ${obs.wind_gust_mph} mph)")
+                        send(name: "windinfo", value: "${obs.wind_dir} (${obs.wind_degrees}Â°) at ${obs.wind_mph} mph\n(Gust: ${obs.wind_gust_mph} mph)")
                 }
             } else {
-                send(name: "windinfo", value: "${obs.wind_dir} (${obs.wind_degrees}°) at ${obs.wind_mph} mph\n(Gust: ${obs.wind_gust_mph} mph)")
+                send(name: "windinfo", value: "${obs.wind_dir} (${obs.wind_degrees}Â°) at ${obs.wind_mph} mph\n(Gust: ${obs.wind_gust_mph} mph)")
             }                  
             
         // Since precip_1hr_in is a string, we need to convert it to a decimal in order to compare it as a number.
