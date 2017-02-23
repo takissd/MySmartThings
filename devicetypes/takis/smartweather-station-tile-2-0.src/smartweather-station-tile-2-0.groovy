@@ -31,8 +31,10 @@ metadata {
 		attribute "weather", "string"
 		attribute "wind", "string"
         attribute "winddirection", "string"
-        attribute "wind_gust_mph", "string"
-        attribute "UVindex", "string"
+        attribute "wind_gust", "string"
+        attribute "winddirection_deg", "string"
+        attribute "windinfo", "string"
+        attribute "uv_index", "string"
         attribute "water", "string"
 		attribute "weatherIcon", "string"
 		attribute "forecastIcon", "string"
@@ -211,7 +213,16 @@ metadata {
             state "windinfo", label: '${currentValue}'
         }
         valueTile("temperature2", "device.temperature", width: 1, height: 1, canChangeIcon: true) {
-            state "temperature", label: '${currentValue}°'
+            state "temperature", label: '${currentValue}°',
+                               backgroundColors:[
+                                   [value: 31, color: "#153591"],
+                                   [value: 44, color: "#1e9cbb"],
+                                   [value: 59, color: "#90d2a7"],
+                                   [value: 74, color: "#44b621"],
+                                   [value: 84, color: "#f1d801"],
+                                   [value: 95, color: "#d04e00"],
+                                   [value: 96, color: "#bc2323"]
+                               ]
         }
 		main(["temperature2"])
 		details(["temperature", "humidity", "weatherIcon", "weather", "feelsLike" , "dewpoint", "windinfo", "pressure", "solarradiation", "uv_index", "light", "visibility", "city", "rise", "set", "lastSTupdate", "percentPrecip", "percentPrecipToday", "percentPrecipLastHour", "water", "alert", "refresh"])}
@@ -336,14 +347,24 @@ def poll() {
                 switch (speed_units) {
                     case "speed_mph" :
                         send(name: "windinfo", value: "${obs.wind_dir} (${obs.wind_degrees}°) at ${obs.wind_mph} mph\n(Gust: ${obs.wind_gust_mph} mph)")
+                        send(name: "wind_gust", value: "${obs.wind_gust_mph}")
+                        send(name: "winddirection", value: "${obs.wind_dir}")
+                        send(name: "winddirection_deg", value: "${obs.wind_degrees}")
+                        send(name: "wind", value: "${obs.wind_mph}")
                     break;
-
                     case "speed_kph":
                         send(name: "windinfo", value: "${obs.wind_dir} (${obs.wind_degrees}°) at ${obs.wind_kph} kph\n(Gust: ${obs.wind_gust_kph} kph)")
+                    	send(name: "wind_gust", value: "${obs.wind_gust_kph}")
+                        send(name: "winddirection", value: "${obs.wind_dir}")
+                        send(name: "winddirection_deg", value: "${obs.wind_degrees}")
+                        send(name: "wind", value: "${obs.wind_kph}")
                     break;
                     default:
-                        send(name: "wind_gust_mph", value: "${obs.wind_gust_mph} mph")
-                        send(name: "windinfo", value: "${obs.wind_dir} (${obs.wind_degrees}°) at ${obs.wind_mph} mph\n(Gust: ${obs.wind_gust_mph} mph)")
+                    	send(name: "windinfo", value: "${obs.wind_dir} (${obs.wind_degrees}°) at ${obs.wind_mph} mph\n(Gust: ${obs.wind_gust_mph} mph)")
+                        send(name: "wind_gust", value: "${obs.wind_gust_mph}")
+                        send(name: "winddirection", value: "${obs.wind_dir}")
+                        send(name: "winddirection_deg", value: "${obs.wind_degrees}")
+                        send(name: "wind", value: "${obs.wind_mph}")
                 }
             } else {
                 send(name: "windinfo", value: "${obs.wind_dir} (${obs.wind_degrees}°) at ${obs.wind_mph} mph\n(Gust: ${obs.wind_gust_mph} mph)")
