@@ -92,19 +92,19 @@ metadata {
     tiles(scale: 2) {
         multiAttributeTile(name:"temperature", type:"generic", width:6, height:4, canChangeIcon: false) {
             tileAttribute("device.temperature", key: "PRIMARY_CONTROL") {
-                attributeState("default", label:'${currentValue}°',
+                attributeState("temperature",label:'${currentValue}°',
 					backgroundColors:[
-		                [value: 31, color: "#153591"],
-		                [value: 44, color: "#1e9cbb"],
-		                [value: 59, color: "#90d2a7"],
-		                [value: 74, color: "#44b621"],
-		                [value: 84, color: "#f1d801"],
-		                [value: 95, color: "#d04e00"],
-		                [value: 96, color: "#bc2323"]
+					[value: 32, color: "#153591"],
+					[value: 44, color: "#1e9cbb"],
+					[value: 59, color: "#90d2a7"],
+					[value: 74, color: "#44b621"],
+					[value: 84, color: "#f1d801"],
+					[value: 92, color: "#d04e00"],
+					[value: 98, color: "#bc2323"]
                     ])
             }
-            tileAttribute("device.humidity", key: "SECONDARY_CONTROL") {
-                attributeState("default", label:'${currentValue}%', unit:"%")
+            tileAttribute("device.feelsLike", key: "SECONDARY_CONTROL") {
+                attributeState("default", label:'Feels Like ${currentValue}°')
             }
         }    
         standardTile("weatherIcon", "device.weatherIcon", decoration: "flat") {
@@ -153,46 +153,43 @@ metadata {
             state "nt_partlycloudy", icon:"st.custom.wu1.nt_partlycloudy", label: ""
         }
         valueTile("lastSTupdate", "device.lastSTupdate", inactiveLabel: false, width: 2, height: 1, decoration: "flat", wordWrap: true) {
-            state("default", label: 'Updated\n${currentValue}')
+            state("default", label: 'Last Updated\n ${currentValue}')
         }
-        valueTile("feelsLike", "device.feelsLike", inactiveLabel: false, width: 2, height: 1, decoration: "flat", wordWrap: true) {
-            state "default", label:'Feels Like\n${currentValue}°'
+        valueTile("humidity", "device.humidity", inactiveLabel: false, width: 2, height: 1, decoration: "flat", wordWrap: true) {
+            state "default", label:'Humidity ${currentValue}%', unit:"%"
         }
         valueTile("weather", "device.weather", inactiveLabel: false, width: 1, height: 1, decoration: "flat", wordWrap: true) {
             state "default", label:'${currentValue}'
         }
-        valueTile("city", "device.city", inactiveLabel: false, width: 2, height: 1, decoration: "flat", wordWrap: true) {
-            state "default", label:'Forecast For\n${currentValue}'
-        }
         valueTile("percentPrecip", "device.percentPrecip", inactiveLabel: false, width: 1, height: 1, decoration: "flat", wordWrap: true) {
-            state "default", label:'Precip.\n${currentValue}%'
+            state "default", label:'Rain\n ${currentValue}%'
         }
         valueTile("percentPrecipToday", "device.percentPrecipToday", inactiveLabel: false, width: 2, height: 1, decoration: "flat", wordWrap: true) {
-            state "default", label:'Rain Today\n${currentValue}'
+            state "default", label:'Rain Today\n ${currentValue}'
         }
         valueTile("percentPrecipLastHour", "device.percentPrecipLastHour", inactiveLabel: false, width: 2, height: 1, decoration: "flat", wordWrap: true) {
-            state "default", label:'Rain Last Hour\n${currentValue}'
+            state "default", label:'Rain Last Hour\n ${currentValue}'
         }
         standardTile("refresh", "device.weather", inactiveLabel: false, width: 1, height: 1, decoration: "flat", wordWrap: true) {
             state "default", label: "", action: "refresh", icon:"st.secondary.refresh"
         }
         valueTile("alert", "device.alert", inactiveLabel: false, width: 5, height: 1, decoration: "flat", wordWrap: true) {
-            state "default", label:'Weather Alerts:\n${currentValue}'
+            state "default", label:'Weather Alerts:\n ${currentValue}'
         }
-        valueTile("rise", "device.localSunrise", inactiveLabel: false, width: 1, height: 1, decoration: "flat", wordWrap: true) {
-            state "default", label:'Sunrise\n${currentValue}'
+        valueTile("rise", "device.localSunrise", inactiveLabel: false, width: 2, height: 1, decoration: "flat", wordWrap: true) {
+            state "default", label:'Sunrise\n ${currentValue}'
         }
-        valueTile("set", "device.localSunset", inactiveLabel: false, width: 1, height: 1, decoration: "flat", wordWrap: true) {
-            state "default", label:'Sunset\n${currentValue}'
+        valueTile("set", "device.localSunset", inactiveLabel: false, width: 2, height: 1, decoration: "flat", wordWrap: true) {
+            state "default", label:'Sunset\n ${currentValue}'
         }
-        valueTile("light", "device.illuminance", inactiveLabel: false, width: 1, height: 1, decoration: "flat", wordWrap: true) {
-            state "default", label:'Lux\n${currentValue}'
+        valueTile("light", "device.illuminance", inactiveLabel: false, width: 2, height: 1, decoration: "flat", wordWrap: true) {
+            state "default", label:'${currentValue} lux'
         }
         valueTile("visibility", "device.visibility", inactiveLabel: false, width: 2, height: 1, decoration: "flat", wordWrap: true) {
-            state "default", label:'Visibility\n${currentValue}'
+            state "default", label:'Visibility\n ${currentValue}'
         }
-        valueTile("uv_index", "device.uv_index", inactiveLabel: false, decoration: "flat") {
-            state "uv_index", label: 'UV Index\n${currentValue}', unit: "UV Index"
+        valueTile("uv_index", "device.uv_index", inactiveLabel: false, width: 2, height: 1, decoration: "flat", wordWrap: true) {
+            state "uv_index", label: 'UV Index ${currentValue}', unit: "UV Index"
         }
         standardTile("water", "device.water", inactiveLabel: false, width: 1, height: 1, decoration: "flat", wordWrap: true) {
             state "default", label: 'updating...', icon: "st.unknown.unknown.unknown"
@@ -200,31 +197,29 @@ metadata {
             state "false",       icon: "st.alarm.water.dry",        backgroundColor:"#99ff99"
         }
         valueTile("dewpoint", "device.dewpoint", inactiveLabel: false, width: 2, height: 1, decoration: "flat", wordWrap: true) {
-            state "default", label:'Dewpoint\n${currentValue}°'
+            state "default", label:'Dewpoint ${currentValue}°'
         }
         valueTile("pressure", "device.pressure", inactiveLabel: false, width: 3, height: 1, decoration: "flat", wordWrap: true) {
-            state "pressure", label: 'Barometric Pressure\n${currentValue}'
-        }
-        valueTile("solarradiation", "device.solarradiation", inactiveLabel: false, width: 2, height: 1, decoration: "flat", wordWrap: true) {
-            state "solarradiation", label: 'Solar Radiation\n${currentValue} W/m²'
+            state "pressure", label: 'Barometric Pressure ${currentValue}'
         }
         valueTile("windinfo", "device.windinfo", inactiveLabel: false, width: 3, height: 1, decoration: "flat", wordWrap: true) {
-            state "windinfo", label: '${currentValue}'
+            state "windinfo", label: 'Wind ${currentValue}'
         }
         valueTile("temperature2", "device.temperature", width: 1, height: 1, canChangeIcon: true) {
             state "temperature", label: '${currentValue}°',
 				backgroundColors:[
-		            [value: 31, color: "#153591"],
-		            [value: 44, color: "#1e9cbb"],
-		            [value: 59, color: "#90d2a7"],
-		            [value: 74, color: "#44b621"],
-		            [value: 84, color: "#f1d801"],
-		            [value: 95, color: "#d04e00"],
-		            [value: 96, color: "#bc2323"]
+					[value: 32, color: "#153591"],
+					[value: 44, color: "#1e9cbb"],
+					[value: 59, color: "#90d2a7"],
+					[value: 74, color: "#44b621"],
+					[value: 84, color: "#f1d801"],
+					[value: 92, color: "#d04e00"],
+					[value: 98, color: "#bc2323"]
             ]
         }
+        
         main(["temperature2"])
-        details(["temperature", "humidity", "weatherIcon", "weather", "feelsLike" , "dewpoint", "windinfo", "pressure", "solarradiation", "uv_index", "light", "visibility", "city", "rise", "set", "lastSTupdate", "percentPrecip", "percentPrecipToday", "percentPrecipLastHour", "water", "alert", "refresh"])}
+        details(["temperature", "feelslike", "weatherIcon", "weather", "humidity" , "dewpoint", "windinfo", "pressure", "solarradiation", "uv_index", "light", "visibility", "city", "rise", "set", "lastSTupdate", "percentPrecip", "percentPrecipToday", "percentPrecipLastHour", "water", "alert", "refresh"])}
 }
 
 // parse events into attributes
@@ -253,7 +248,7 @@ def poll() {
     def obs = get("conditions")?.current_observation
     if (obs) {
         log.debug "obs --> ${obs}"
-        def now = new Date().format('hh:mm:ss M.d.yyyy',location.timeZone)
+        def now = new Date().format('HH:mm:ss M.d.yyyy',location.timeZone)
         sendEvent(name:"lastSTupdate", value: now)
         
         def weatherIcon = obs.icon_url.split("/")[-1].split("\\.")[0]
@@ -314,37 +309,37 @@ def poll() {
         if (dist_units) {
             switch (dist_units) {
             case "dist_mi" :
-                send(name: "visibility", value: "${obs.visibility_mi} mi.")
+                send(name: "visibility", value: "${obs.visibility_mi} mi")
                 break;
 
             case "dist_km":
                 send(name: "visibility", value: "${obs.visibility_km} km")
                 break;
             default:
-                send(name: "visibility", value: "${obs.visibility_mi} mi.")
+                send(name: "visibility", value: "${obs.visibility_mi} mi")
             }
         } else {
-            send(name: "visibility", value: "${obs.visibility_mi} mi.")
+            send(name: "visibility", value: "${obs.visibility_mi} mi")
         }      
         
         if (height_units) {
             switch (height_units) {
             case "height_in" :
-                send(name: "percentPrecipToday", value: "${obs.precip_today_in} in.")
-                send(name: "percentPrecipLastHour", value: "${obs.precip_1hr_in} in.")
+                send(name: "percentPrecipToday", value: "${obs.precip_today_in} in")
+                send(name: "percentPrecipLastHour", value: "${obs.precip_1hr_in} in")
                 break;
 
             case "height_mm":
-                send(name: "percentPrecipToday", value: "${obs.precip_today_metric} mm.")
-                send(name: "percentPrecipLastHour", value: "${obs.precip_1hr_metric} mm.")
+                send(name: "percentPrecipToday", value: "${obs.precip_today_metric} mm")
+                send(name: "percentPrecipLastHour", value: "${obs.precip_1hr_metric} mm")
                 break;
             default:
-                send(name: "percentPrecipToday", value: "${obs.precip_today_in} in.")
-                send(name: "percentPrecipLastHour", value: "${obs.precip_1hr_in} in.")
+                send(name: "percentPrecipToday", value: "${obs.precip_today_in} in")
+                send(name: "percentPrecipLastHour", value: "${obs.precip_1hr_in} in")
             }
         } else {
-            send(name: "percentPrecipToday", value: "${obs.precip_today_in} in.")
-            send(name: "percentPrecipLastHour", value: "${obs.precip_1hr_in} in.")
+            send(name: "percentPrecipToday", value: "${obs.precip_today_in} in")
+            send(name: "percentPrecipLastHour", value: "${obs.precip_1hr_in} in")
         }  
 
         if (speed_units) {
@@ -401,7 +396,7 @@ def poll() {
         def sunriseDate = ltf.parse("${today} ${a.sunrise.hour}:${a.sunrise.minute}")
         def sunsetDate = ltf.parse("${today} ${a.sunset.hour}:${a.sunset.minute}")
 
-        def tf = new java.text.SimpleDateFormat("h:mm a")
+        def tf = new java.text.SimpleDateFormat("HH:mm")
         tf.setTimeZone(TimeZone.getTimeZone("GMT${obs.local_tz_offset}"))
         def localSunrise = "${tf.format(sunriseDate)}"
         def localSunset = "${tf.format(sunsetDate)}"
